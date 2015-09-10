@@ -1,4 +1,4 @@
-OBJS = main.cpp
+OBJS = src/Mod.cpp main.cpp
 
 # Compiler
 CC = g++

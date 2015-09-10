@@ -31,8 +31,9 @@ public:
     Mod pwr(long e) const;
     long val() const;
     
-    static void set_modulus(long m);
-    
+    static void set_modulus(long m); 
+
+    long getX() { return x; };
 private:
     long x;
     static long modulus;
@@ -56,7 +57,5 @@ bool operator!=(long t, const Mod& m);
 
 istream& operator>>(istream& is, Mod& m);
 ostream& operator<<(ostream& os, const Mod& m);
-
-long Mod::modulus = 17;
 
 #endif /* defined(____Mod__) */
