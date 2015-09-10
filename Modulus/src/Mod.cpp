@@ -9,7 +9,8 @@ Mod::Mod(const Mod& m) {
 }
 
 Mod& Mod::operator=(const Mod& m) {
-
+	x = m.x;
+	return *this;
 }
 
 Mod& Mod::operator+=(const Mod& m) {
