@@ -1,5 +1,8 @@
 #include "Mod.h"
+#include <inttypes.h>
 
+#define MAX_LONG_SIZE 2147483647
+#define MIN_LONG_SIZE -2147483648
 long Mod::modulus;
 
 Mod::Mod(long t) {
@@ -15,8 +18,23 @@ Mod& Mod::operator=(const Mod& m) {
 	return *this;
 }
 
-Mod& Mod::operator+=(const Mod& m) {
+#include<stdio.h>
 
+Mod operator+(const Mod& a, const Mod& b) {
+	
+}
+
+Mod& Mod::operator+=(const Mod& m) {
+	long mod1 = this->val();
+	long mod2 = m.val();
+	long sum = mod1 + mod2;
+	printf("%ld %ld %ld\n", mod1, mod2, sum);
+	if (sum < 0) {
+		mod1 -= (MAX_LONG_SIZE - mod2);
+		printf("%ld\n", mod1);
+		long r = ((MAX_LONG_SIZE % modulus) + (mod1 % modulus)) % modulus;
+		printf("%ld\n", r);
+	}
 }
 
 Mod& Mod::operator-=(const Mod& m) {
