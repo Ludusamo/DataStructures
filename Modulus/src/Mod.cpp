@@ -40,7 +40,7 @@ Mod Mod::pwr(long e) const {
 }
 
 long Mod::val() const {
-
+	return x % modulus;
 }
 
 void Mod::set_modulus(long m) {
