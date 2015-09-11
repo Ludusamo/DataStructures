@@ -1,5 +1,7 @@
 #include "Mod.h"
 
+long Mod::modulus;
+
 Mod::Mod(long t) {
 	this->x = t;
 }
@@ -41,6 +43,6 @@ long Mod::val() const {
 
 }
 
-static void set_modulus(long m) {
-
+void Mod::set_modulus(long m) {
+	Mod::modulus = m;
 }

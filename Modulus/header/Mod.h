@@ -34,6 +34,7 @@ public:
     static void set_modulus(long m); 
 
     long getX() { return x; };
+    long getMod() { return modulus; };
 private:
     long x;
     static long modulus;

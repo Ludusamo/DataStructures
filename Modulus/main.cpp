@@ -3,7 +3,7 @@
 
 int main() {
 	Mod mod1(1), mod2(2);
-	mod1 = mod2;
-	printf("%ld %ld\n", mod1.getX(), mod2.getX());
+	Mod::set_modulus(5);
+	printf("%ld %ld\n", mod1.getMod(), mod2.getMod());
 	return 0;
 }
