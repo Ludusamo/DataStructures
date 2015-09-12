@@ -57,15 +57,13 @@ Mod operator-(const Mod& a, const Mod& b) {
 }
 
 Mod& Mod::operator-=(const Mod& m) {
-	Mod mod1(this->val());	
-	Mod mod2(-m.val());
-	mod1 += mod2;
-	x = mod1.val();
+	Mod mod2 = -m;
+	*this += mod2;
 	return *this;
 }
 
 Mod& Mod::operator*=(const Mod& m) {
-
+	
 }
 
 Mod& Mod::operator/=(const Mod& m) {
@@ -73,7 +71,7 @@ Mod& Mod::operator/=(const Mod& m) {
 }
 
 Mod Mod::operator-() const {
-
+	return Mod(-this->x);
 }
 
 Mod Mod::pwr(long e) const {
