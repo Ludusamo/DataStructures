@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <stdint.h>
 
 using std::istream;
 using std::ostream;
@@ -20,7 +21,7 @@ using std::cerr;
 
 class Mod {
 public:
-    Mod(long t);
+    Mod(int64_t t);
     Mod(const Mod& m);
     Mod& operator=(const Mod& m);
     Mod& operator+=(const Mod& m);
@@ -28,30 +29,30 @@ public:
     Mod& operator*=(const Mod& m);
     Mod& operator/=(const Mod& m);
     Mod operator-() const;
-    Mod pwr(long e) const;
-    long val() const;
+    Mod pwr(int64_t e) const;
+    int64_t val() const;
     
-    static void set_modulus(long m); 
+    static void set_modulus(int64_t m); 
 private:
-    long x;
-    static long modulus;
+    int64_t x;
+    static int64_t modulus;
     
-    static Mod inv(long r0);
+    static Mod inv(int64_t r0);
 };
 
 
 Mod operator+(const Mod& a, const Mod& b);
-Mod operator+(long t, const Mod& m);
+Mod operator+(int64_t t, const Mod& m);
 Mod operator-(const Mod& a, const Mod& b);
-Mod operator-(long t, const Mod& m);
+Mod operator-(int64_t t, const Mod& m);
 Mod operator*(const Mod& a, const Mod& b);
-Mod operator*(long t, const Mod& m);
+Mod operator*(int64_t t, const Mod& m);
 Mod operator/(const Mod& a, const Mod& b);
-Mod operator/(long t, const Mod& m);
+Mod operator/(int64_t t, const Mod& m);
 bool operator==(const Mod& a, const Mod& b);
-bool operator==(long t, const Mod& m);
+bool operator==(int64_t t, const Mod& m);
 bool operator!=(const Mod& a, const Mod& b);
-bool operator!=(long t, const Mod& m);
+bool operator!=(int64_t t, const Mod& m);
 
 istream& operator>>(istream& is, Mod& m);
 ostream& operator<<(ostream& os, const Mod& m);
