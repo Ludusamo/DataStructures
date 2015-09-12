@@ -62,8 +62,21 @@ Mod& Mod::operator-=(const Mod& m) {
 	return *this;
 }
 
+Mod operator*(const Mod& a, const Mod& b) {
+	Mod mod1 = a;
+	Mod mod2 = b;
+	mod1 *= mod2;
+	return Mod(mod1.val());
+}
+
 Mod& Mod::operator*=(const Mod& m) {
-	
+	long double xBuffer = this->val(); // To prevent loss from divison
+	int64_t pMQ = xBuffer * m.val() / modulus; // Quotient of Product and Modulus
+	printf("PMQ = %lld\n", pMQ);
+	int64_t r = ((this->val() * m.val()) - (pMQ * modulus)) % modulus;
+	x = (r < 0) ? r + modulus : r;
+	printf("Remainder: %lld\n", x);
+	return *this;
 }
 
 Mod& Mod::operator/=(const Mod& m) {
