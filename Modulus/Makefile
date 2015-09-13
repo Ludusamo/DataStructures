@@ -1,4 +1,4 @@
-OBJS = src/Mod.cpp main.cpp
+OBJS = src/ExtendedEuclidean.cpp src/Mod.cpp main.cpp
 
 # Compiler
 CC = g++

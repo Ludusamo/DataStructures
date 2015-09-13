@@ -101,7 +101,22 @@ Mod power(const Mod& m, int64_t e) {
 Mod Mod::pwr(int64_t e) const {
 	Mod p = power(*this, e);
 	printf("%lld\n", p.val() % modulus);
+	inv(100);
 	return p;
+}
+
+bool nextExtEuclideanR(int64_t a, int64_t b) {
+	return a % b;
+}
+
+int64_t extEuclidean(int64_t a, int64_t b) {
+	if (nextExtEuclideanR == 0) {
+		
+	}
+}
+
+Mod Mod::inv(int64_t r0) {
+
 }
 
 int64_t Mod::val() const {
