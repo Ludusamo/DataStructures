@@ -11,11 +11,11 @@ Mod::Mod(int64_t t) {
 }
 
 Mod::Mod(const Mod& m) {
-	this->x = m.x;
+	this->x = m.val();
 }
 
 Mod& Mod::operator=(const Mod& m) {
-	x = m.x;
+	x = m.val();
 	return *this;
 }
 
