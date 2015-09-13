@@ -3,9 +3,9 @@
 #include "Mod.h"
 #include "ExtendedEuclidean.h"
 
-int64_t mod = 7;
-int64_t a = 2;
-int64_t b = 3;
+int64_t mod = LLONG_MAX;
+int64_t a = -LLONG_MIN;
+int64_t b = LLONG_MAX;
 
 
 void resetVariables(Mod& mod1, Mod& mod2) {
@@ -18,6 +18,7 @@ int main() {
 	Mod mod1(a), mod2(b);
 	printf("Mod: %lld, A: %lld, B: %lld\n", mod, a, b);
 	printf("MAX SIZE = %lld\n", LLONG_MAX);	
+	printf("%d\n", (-13 + 57));	
 
 	printf("--------------\n");
 	resetVariables(mod1, mod2);

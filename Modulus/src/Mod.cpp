@@ -28,18 +28,17 @@ Mod& Mod::operator+=(const Mod& m) {
 		mod1 -= (LLONG_MAX - mod2);
 		printf("%lld\n", mod1);
 		int64_t r = ((LLONG_MAX % modulus) + (mod1 % modulus)) % modulus;
-		printf("Remainder: %lld\n", r);
 		x = r;
 	} else if ((mod1 / 2) + (mod2 / 2) <= (LLONG_MIN / 2)) {
 		mod1 = mod1 - (LLONG_MIN - mod1);
 		printf("%lld\n", mod1);
 		int64_t r = ((LLONG_MIN % modulus) + (mod1 % modulus))  % modulus;
-		printf("Remainder: %lld\n", r);
 		x = r;
 	} else {
-		x = sum;
-		printf("Remainder: %lld\n", x);
+		x = sum % modulus;
 	}
+	if (x < 0) x = modulus + x;
+	printf("Remainder: %lld\n", x);
 	return *this;
 }
 
@@ -81,7 +80,11 @@ Mod power(const Mod& m, int64_t e) {
 }
 
 Mod Mod::pwr(int64_t e) const {
-	Mod p = power(*this, e);
+	Mod p = *this;
+	if (e < 0) {
+		Mod inverse = inv(x);
+		p = power(inverse, e * -1);
+	} else p = power(*this, e);
 	printf("%lld\n", p.val() % modulus);
 	return p;
 }

@@ -10,6 +10,10 @@ ExtendedEuclidean::ExtendedEuclidean(int64_t a, int64_t b) {
 }
 
 void ExtendedEuclidean::execute() {	
+	if (a % b == 0) {
+		printf("Cannot divide by 0\n");
+		exit(0);
+	}
 	while (b % (a % b) != 0) {
 		int64_t bufferS = calculateNextST(sPrev, sCurr, a / b);
 		sPrev = sCurr;

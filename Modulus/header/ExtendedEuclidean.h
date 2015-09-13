@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <cassert>
 #include <stdint.h>
+#include <stdlib.h>
 
 typedef struct {
 	int64_t a, b, x, y, gcd;
