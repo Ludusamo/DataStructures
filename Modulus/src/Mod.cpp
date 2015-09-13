@@ -104,11 +104,19 @@ Mod operator+(const Mod& a, const Mod& b) {
 	return Mod(mod1.val());
 }
 
+Mod operator+(int64_t t, const Mod& m) {
+	return Mod(t) + m;
+}
+
 Mod operator-(const Mod& a, const Mod& b) {
 	Mod mod1 = a;
 	Mod mod2 = b;
 	mod1 -= mod2;
 	return Mod(mod1.val());
+}
+
+Mod operator-(int64_t t, const Mod& m) {
+	return Mod(t) - m;
 }
 
 Mod operator*(const Mod& a, const Mod& b) {
@@ -118,11 +126,47 @@ Mod operator*(const Mod& a, const Mod& b) {
 	return Mod(mod1.val());
 }
 
+Mod operator*(int64_t t, const Mod& m) {
+	return Mod(t) * m;
+}
+
 Mod operator/(const Mod& a, const Mod& b) {
 	Mod mod1 = a;
 	Mod mod2 = b;
 	mod1 /= mod2;	
 	return Mod(mod1.val());
+}
+
+Mod operator/(int64_t t, const Mod& m) {
+	return Mod(t) / m;
+}
+
+bool operator==(const Mod& a, const Mod& b) {
+	return a.val() == b.val();
+}
+
+bool operator==(int64_t t, const Mod& b) {
+	return Mod(t) == b;
+}
+
+bool operator!=(const Mod& a, const Mod& b) {
+	return a.val() != b.val();
+}
+
+bool operator!=(int64_t t, const Mod& b) {
+	return Mod(t) != b;
+}
+
+istream& operator>>(istream& is, Mod& m) {
+	int64_t t;
+	is >> t;
+	m = Mod(t);
+	return is;
+}
+
+ostream& operator<<(ostream& os, const Mod& m) {
+	os << m.val();
+	return os;
 }
 
 void Mod::set_modulus(int64_t m) {

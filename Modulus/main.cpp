@@ -17,7 +17,7 @@ int main() {
 	Mod::set_modulus(mod);
 	Mod mod1(a), mod2(b);
 	printf("Mod: %lld, A: %lld, B: %lld\n", mod, a, b);
-	printf("MAX SIZE = %lld\n", LLONG_MAX);
+	printf("MAX SIZE = %lld\n", LLONG_MAX);	
 
 	printf("--------------\n");
 	resetVariables(mod1, mod2);
@@ -27,7 +27,7 @@ int main() {
 	printf("--------------\n");
 	resetVariables(mod1, mod2);
 	printf("Subtraction\n");	
-	mod1 - mod2;
+	mod1 - b;
 
 	printf("--------------\n");
 	resetVariables(mod1, mod2);
