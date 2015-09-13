@@ -1,5 +1,7 @@
 #include "Mod.h"
 #include <climits>
+#include <stdlib.h>
+#include<stdio.h>
 
 int64_t Mod::modulus;
 
@@ -15,8 +17,6 @@ Mod& Mod::operator=(const Mod& m) {
 	x = m.x;
 	return *this;
 }
-
-#include<stdio.h>
 
 Mod operator+(const Mod& a, const Mod& b) {
 	Mod mod1 = a;
@@ -87,8 +87,21 @@ Mod Mod::operator-() const {
 	return Mod(-this->x);
 }
 
-Mod Mod::pwr(int64_t e) const {
+Mod power(const Mod& m, int64_t e) {
+	if (e == 1) return m;
+	bool isEven = (e % 2 == 0);
+	Mod square = m * m;
+	if (isEven) {
+		return power(square, e / 2);
+	} else {
+		return m * power(square, e / 2);
+	}
+}
 
+Mod Mod::pwr(int64_t e) const {
+	Mod p = power(*this, e);
+	printf("%lld\n", p.val() % modulus);
+	return p;
 }
 
 int64_t Mod::val() const {
@@ -96,5 +109,9 @@ int64_t Mod::val() const {
 }
 
 void Mod::set_modulus(int64_t m) {
+	if (m < 2) {
+		printf("Cannot set modulus to a number below 2.\n");
+		exit(-1);
+	}
 	Mod::modulus = m;
 }
