@@ -1,7 +1,8 @@
 #include "Mod.h"
+#include "ExtendedEuclidean.h"
 #include <climits>
 #include <stdlib.h>
-#include<stdio.h>
+#include <stdio.h>
 
 int64_t Mod::modulus;
 
@@ -16,13 +17,6 @@ Mod::Mod(const Mod& m) {
 Mod& Mod::operator=(const Mod& m) {
 	x = m.x;
 	return *this;
-}
-
-Mod operator+(const Mod& a, const Mod& b) {
-	Mod mod1 = a;
-	Mod mod2 = b;
-	mod1 += mod2;
-	return Mod(mod1.val());
 }
 
 Mod& Mod::operator+=(const Mod& m) {
@@ -49,24 +43,10 @@ Mod& Mod::operator+=(const Mod& m) {
 	return *this;
 }
 
-Mod operator-(const Mod& a, const Mod& b) {
-	Mod mod1 = a;
-	Mod mod2 = b;
-	mod1 -= mod2;
-	return Mod(mod1.val());
-}
-
 Mod& Mod::operator-=(const Mod& m) {
 	Mod mod2 = -m;
 	*this += mod2;
 	return *this;
-}
-
-Mod operator*(const Mod& a, const Mod& b) {
-	Mod mod1 = a;
-	Mod mod2 = b;
-	mod1 *= mod2;
-	return Mod(mod1.val());
 }
 
 Mod& Mod::operator*=(const Mod& m) {
@@ -80,7 +60,9 @@ Mod& Mod::operator*=(const Mod& m) {
 }
 
 Mod& Mod::operator/=(const Mod& m) {
-
+	Mod inverse = inv(m.val());
+	*this *= inverse;
+	return *this;
 }
 
 Mod Mod::operator-() const {
@@ -101,26 +83,46 @@ Mod power(const Mod& m, int64_t e) {
 Mod Mod::pwr(int64_t e) const {
 	Mod p = power(*this, e);
 	printf("%lld\n", p.val() % modulus);
-	inv(100);
 	return p;
 }
 
-bool nextExtEuclideanR(int64_t a, int64_t b) {
-	return a % b;
-}
-
-int64_t extEuclidean(int64_t a, int64_t b) {
-	if (nextExtEuclideanR == 0) {
-		
-	}
-}
-
 Mod Mod::inv(int64_t r0) {
-
+	ExtendedEuclidean extEuc(r0, modulus);
+	extEuc.execute();
+	BezoutIdentity bezoutIdentity = extEuc.getBezoutIdentity();
+	return Mod(bezoutIdentity.x);
 }
 
 int64_t Mod::val() const {
 	return x;
+}
+
+Mod operator+(const Mod& a, const Mod& b) {
+	Mod mod1 = a;
+	Mod mod2 = b;
+	mod1 += mod2;
+	return Mod(mod1.val());
+}
+
+Mod operator-(const Mod& a, const Mod& b) {
+	Mod mod1 = a;
+	Mod mod2 = b;
+	mod1 -= mod2;
+	return Mod(mod1.val());
+}
+
+Mod operator*(const Mod& a, const Mod& b) {
+	Mod mod1 = a;
+	Mod mod2 = b;
+	mod1 *= mod2;
+	return Mod(mod1.val());
+}
+
+Mod operator/(const Mod& a, const Mod& b) {
+	Mod mod1 = a;
+	Mod mod2 = b;
+	mod1 /= mod2;	
+	return Mod(mod1.val());
 }
 
 void Mod::set_modulus(int64_t m) {

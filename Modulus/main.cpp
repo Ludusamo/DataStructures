@@ -3,9 +3,9 @@
 #include "Mod.h"
 #include "ExtendedEuclidean.h"
 
-int64_t mod = LLONG_MAX;
-int64_t a = LLONG_MAX - 43;
-int64_t b = LLONG_MAX - 53;
+int64_t mod = 7;
+int64_t a = 2;
+int64_t b = 3;
 
 
 void resetVariables(Mod& mod1, Mod& mod2) {
@@ -38,10 +38,11 @@ int main() {
 	resetVariables(mod1, mod2);
 	printf("Power\n");	
 	mod1.pwr(b);
-	
-	printf("--------------\n");
-	ExtendedEuclidean e(5, ;
-	e.execute();
 
+	printf("--------------\n");
+	resetVariables(mod1, mod2);
+	printf("Division\n");	
+	mod1 / mod2;
+	
 	return 0;
 }
