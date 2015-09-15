@@ -23,22 +23,18 @@ Mod& Mod::operator+=(const Mod& m) {
 	int64_t mod1 = this->val();
 	int64_t mod2 = m.val();
 	int64_t sum = mod1 + mod2;
-	printf("%lld %lld %lld\n", mod1, mod2, sum);
 	if ((mod1 / 2) + (mod2 / 2) >= (LLONG_MAX / 2)) {
 		mod1 -= (LLONG_MAX - mod2);
-		printf("%lld\n", mod1);
 		int64_t r = ((LLONG_MAX % modulus) + (mod1 % modulus)) % modulus;
 		x = r;
 	} else if ((mod1 / 2) + (mod2 / 2) <= (LLONG_MIN / 2)) {
 		mod1 = mod1 - (LLONG_MIN - mod1);
-		printf("%lld\n", mod1);
 		int64_t r = ((LLONG_MIN % modulus) + (mod1 % modulus))  % modulus;
 		x = r;
 	} else {
 		x = sum % modulus;
 	}
 	if (x < 0) x = modulus + x;
-	printf("Remainder: %lld\n", x);
 	return *this;
 }
 
@@ -51,10 +47,8 @@ Mod& Mod::operator-=(const Mod& m) {
 Mod& Mod::operator*=(const Mod& m) {
 	long double xBuffer = this->val(); // To prevent loss from divison
 	int64_t pMQ = xBuffer * m.val() / modulus; // Quotient of Product and Modulus
-	printf("PMQ = %lld\n", pMQ);
 	int64_t r = ((this->val() * m.val()) - (pMQ * modulus)) % modulus;
 	x = (r < 0) ? r + modulus : r;
-	printf("Remainder: %lld\n", x);
 	return *this;
 }
 
@@ -85,7 +79,6 @@ Mod Mod::pwr(int64_t e) const {
 		Mod inverse = inv(x);
 		p = power(inverse, e * -1);
 	} else p = power(*this, e);
-	printf("%lld\n", p.val() % modulus);
 	return p;
 }
 
@@ -174,7 +167,6 @@ ostream& operator<<(ostream& os, const Mod& m) {
 
 void Mod::set_modulus(int64_t m) {
 	if (m < 2) {
-		printf("Cannot set modulus to a number below 2.\n");
 		exit(-1);
 	}
 	Mod::modulus = m;

@@ -31,7 +31,6 @@ int main() {
 	fscanf(input, "%d", &numTest);
 	for (int i = 0; i < numTest; i++) {
 		fscanf(input, "%lld %lld %lld %d %lld", &a, &b, &mod, &op, &expectedValue);
-		printf("%lld %lld %lld %d %lld\n", a, b, mod, op, expectedValue);
 		TestCase test(a, b, mod, op, expectedValue);
 		test.run();
 	}

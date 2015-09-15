@@ -35,7 +35,6 @@ void ExtendedEuclidean::execute() {
 	tPrev = tCurr;
 	tCurr = bufferT;
 	gcd = a % b;
-	printf("GCD: %lld\nSCurr: %lld\nTCurr: %lld\n", gcd, sCurr, tCurr);
 }
 
 BezoutIdentity ExtendedEuclidean::getBezoutIdentity() {
