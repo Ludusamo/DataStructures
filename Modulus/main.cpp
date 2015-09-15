@@ -2,6 +2,10 @@
 #include <climits>
 #include "Mod.h"
 #include "ExtendedEuclidean.h"
+#include "TestCase.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <vector>
 
 int64_t mod = 4;
 int64_t a = 6;
@@ -14,36 +18,23 @@ void resetVariables(Mod& mod1, Mod& mod2) {
 }
 
 int main() {	
-	Mod::set_modulus(mod);
-	Mod mod1(a), mod2(b);
-	printf("Mod: %lld, A: %lld, B: %lld\n", mod, a, b);
-	printf("MAX SIZE = %lld\n", LLONG_MAX);	
-	printf("%d\n", (-13 + 57));	
+	FILE *input;
+	input = fopen("res/test.in", "r");	
+	if (input == NULL) {
+		printf("File does not exist!\n");
+		exit(0);
+	}
 
-	printf("--------------\n");
-	resetVariables(mod1, mod2);
-	printf("Addition\n");	
-	mod1 + mod2;
-
-	printf("--------------\n");
-	resetVariables(mod1, mod2);
-	printf("Subtraction\n");	
-	mod1 - b;
-
-	printf("--------------\n");
-	resetVariables(mod1, mod2);
-	printf("Multiplication\n");	
-	mod1 * mod2;
-
-	printf("--------------\n");
-	resetVariables(mod1, mod2);
-	printf("Power\n");	
-	mod1.pwr(b);
-
-	printf("--------------\n");
-	resetVariables(mod1, mod2);
-	printf("Division\n");	
-	mod1 / mod2;
+	int numTest;
+	int64_t a, b, mod, expectedValue;
+	int op;
+	fscanf(input, "%d", &numTest);
+	for (int i = 0; i < numTest; i++) {
+		fscanf(input, "%lld %lld %lld %d %lld", &a, &b, &mod, &op, &expectedValue);
+		printf("%lld %lld %lld %d %lld\n", a, b, mod, op, expectedValue);
+		TestCase test(a, b, mod, op, expectedValue);
+		test.run();
+	}
 	
 	return 0;
 }
