@@ -17,6 +17,7 @@ private:
 		SUB,
 		MUL,
 		DIV,
+		POW,
 		EQ,
 		NEQ
 	} OPERATION;

@@ -41,6 +41,10 @@ int TestCase::run() {
 		operation = "/";
 		result = (mod1 / mod2).val();	
 		break;
+	case POW:
+		operation = "^";
+		result = (mod1.pwr(b)).val();	
+		break;
 	case EQ:
 		operation = "==";
 		result = mod1 == mod2;
