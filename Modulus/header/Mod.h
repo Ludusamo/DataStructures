@@ -21,7 +21,7 @@ using std::cerr;
 
 class Mod {
 public:
-    Mod(int64_t t);
+    Mod(long t);
     Mod(const Mod& m);
     Mod& operator=(const Mod& m);
     Mod& operator+=(const Mod& m);
@@ -29,30 +29,30 @@ public:
     Mod& operator*=(const Mod& m);
     Mod& operator/=(const Mod& m);
     Mod operator-() const;
-    Mod pwr(int64_t e) const;
-    int64_t val() const;
+    Mod pwr(long e) const;
+    long val() const;
     
-    static void set_modulus(int64_t m); 
+    static void set_modulus(long m); 
 private:
-    int64_t x;
-    static int64_t modulus;
+    long x;
+    static long modulus;
     
-    static Mod inv(int64_t r0);
+    static Mod inv(long r0);
 };
 
 
 Mod operator+(const Mod& a, const Mod& b);
-Mod operator+(int64_t t, const Mod& m);
+Mod operator+(long t, const Mod& m);
 Mod operator-(const Mod& a, const Mod& b);
-Mod operator-(int64_t t, const Mod& m);
+Mod operator-(long t, const Mod& m);
 Mod operator*(const Mod& a, const Mod& b);
-Mod operator*(int64_t t, const Mod& m);
+Mod operator*(long t, const Mod& m);
 Mod operator/(const Mod& a, const Mod& b);
-Mod operator/(int64_t t, const Mod& m);
+Mod operator/(long t, const Mod& m);
 bool operator==(const Mod& a, const Mod& b);
-bool operator==(int64_t t, const Mod& m);
+bool operator==(long t, const Mod& m);
 bool operator!=(const Mod& a, const Mod& b);
-bool operator!=(int64_t t, const Mod& m);
+bool operator!=(long t, const Mod& m);
 
 istream& operator>>(istream& is, Mod& m);
 ostream& operator<<(ostream& os, const Mod& m);

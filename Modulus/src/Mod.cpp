@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int64_t Mod::modulus;
+long Mod::modulus;
 
-Mod::Mod(int64_t t) {
+Mod::Mod(long t) {
 	this->x = t % modulus;
 }
 
@@ -20,16 +20,16 @@ Mod& Mod::operator=(const Mod& m) {
 }
 
 Mod& Mod::operator+=(const Mod& m) {
-	int64_t mod1 = this->val();
-	int64_t mod2 = m.val();
-	int64_t sum = mod1 + mod2;
+	long mod1 = this->val();
+	long mod2 = m.val();
+	long sum = mod1 + mod2;
 	if ((mod1 / 2) + (mod2 / 2) >= (LLONG_MAX / 2)) {
 		mod1 -= (LLONG_MAX - mod2);
-		int64_t r = ((LLONG_MAX % modulus) + (mod1 % modulus)) % modulus;
+		long r = ((LLONG_MAX % modulus) + (mod1 % modulus)) % modulus;
 		x = r;
 	} else if ((mod1 / 2) + (mod2 / 2) <= (LLONG_MIN / 2)) {
 		mod1 = mod1 - (LLONG_MIN - mod1);
-		int64_t r = ((LLONG_MIN % modulus) + (mod1 % modulus))  % modulus;
+		long r = ((LLONG_MIN % modulus) + (mod1 % modulus))  % modulus;
 		x = r;
 	} else {
 		x = sum % modulus;
@@ -46,8 +46,8 @@ Mod& Mod::operator-=(const Mod& m) {
 
 Mod& Mod::operator*=(const Mod& m) {
 	long double xBuffer = this->val(); // To prevent loss from divison
-	int64_t pMQ = xBuffer * m.val() / modulus; // Quotient of Product and Modulus
-	int64_t r = ((this->val() * m.val()) - (pMQ * modulus)) % modulus;
+	long pMQ = xBuffer * m.val() / modulus; // Quotient of Product and Modulus
+	long r = ((this->val() * m.val()) - (pMQ * modulus)) % modulus;
 	x = (r < 0) ? r + modulus : r;
 	return *this;
 }
@@ -62,7 +62,7 @@ Mod Mod::operator-() const {
 	return Mod(-this->x);
 }
 
-Mod power(const Mod& m, int64_t e) {
+Mod power(const Mod& m, long e) {
 	if (e == 1) return m;
 	bool isEven = (e % 2 == 0);
 	Mod square = m * m;
@@ -73,7 +73,7 @@ Mod power(const Mod& m, int64_t e) {
 	}
 }
 
-Mod Mod::pwr(int64_t e) const {
+Mod Mod::pwr(long e) const {
 	Mod p = *this;
 	if (e < 0) {
 		Mod inverse = inv(x);
@@ -82,40 +82,40 @@ Mod Mod::pwr(int64_t e) const {
 	return p;
 }
 
-int64_t calculateNextS(int64_t prev, int64_t curr, int64_t q) {
+long calculateNextS(long prev, long curr, long q) {
 	return prev - q * curr;
 }
 
-int64_t extendedEuclidean(int64_t a, int64_t b) {
-	int64_t sPrev = 1;
-	int64_t sCurr = 0;
-	int64_t tPrev = 0;
-	int64_t rCurr = 1;
+long extendedEuclidean(long a, long b) {
+	long sPrev = 1;
+	long sCurr = 0;
+	long tPrev = 0;
+	long rCurr = 1;
 	if (a % b == 0) {
 		printf("Cannot divide by 0\n");
 		exit(0);
 	}
 	while (b % (a % b) != 0) {
-		int64_t bufferS = calculateNextS(sPrev, sCurr, a / b);
+		long bufferS = calculateNextS(sPrev, sCurr, a / b);
 		sPrev = sCurr;
 		sCurr = bufferS;
 
-		int64_t buffer = a;
+		long buffer = a;
 		a = b;
 		b = buffer % b;	
 	}
-	int64_t bufferS = calculateNextS(sPrev, sCurr, a / b);
+	long bufferS = calculateNextS(sPrev, sCurr, a / b);
 	sPrev = sCurr;
 	sCurr = bufferS;
 
 	return sCurr;
 }
 
-Mod Mod::inv(int64_t r0) {
+Mod Mod::inv(long r0) {
 	return Mod(extendedEuclidean(r0, modulus));
 }
 
-int64_t Mod::val() const {
+long Mod::val() const {
 	return x;
 }
 
@@ -126,7 +126,7 @@ Mod operator+(const Mod& a, const Mod& b) {
 	return Mod(mod1.val());
 }
 
-Mod operator+(int64_t t, const Mod& m) {
+Mod operator+(long t, const Mod& m) {
 	return Mod(t) + m;
 }
 
@@ -137,7 +137,7 @@ Mod operator-(const Mod& a, const Mod& b) {
 	return Mod(mod1.val());
 }
 
-Mod operator-(int64_t t, const Mod& m) {
+Mod operator-(long t, const Mod& m) {
 	return Mod(t) - m;
 }
 
@@ -148,7 +148,7 @@ Mod operator*(const Mod& a, const Mod& b) {
 	return Mod(mod1.val());
 }
 
-Mod operator*(int64_t t, const Mod& m) {
+Mod operator*(long t, const Mod& m) {
 	return Mod(t) * m;
 }
 
@@ -159,7 +159,7 @@ Mod operator/(const Mod& a, const Mod& b) {
 	return Mod(mod1.val());
 }
 
-Mod operator/(int64_t t, const Mod& m) {
+Mod operator/(long t, const Mod& m) {
 	return Mod(t) / m;
 }
 
@@ -167,7 +167,7 @@ bool operator==(const Mod& a, const Mod& b) {
 	return a.val() == b.val();
 }
 
-bool operator==(int64_t t, const Mod& b) {
+bool operator==(long t, const Mod& b) {
 	return Mod(t) == b;
 }
 
@@ -175,12 +175,12 @@ bool operator!=(const Mod& a, const Mod& b) {
 	return a.val() != b.val();
 }
 
-bool operator!=(int64_t t, const Mod& b) {
+bool operator!=(long t, const Mod& b) {
 	return Mod(t) != b;
 }
 
 istream& operator>>(istream& is, Mod& m) {
-	int64_t t;
+	long t;
 	is >> t;
 	m = Mod(t);
 	return is;
@@ -191,7 +191,7 @@ ostream& operator<<(ostream& os, const Mod& m) {
 	return os;
 }
 
-void Mod::set_modulus(int64_t m) {
+void Mod::set_modulus(long m) {
 	if (m < 2) {
 		exit(-1);
 	}
