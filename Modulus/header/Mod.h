@@ -3,7 +3,7 @@
  
     For now, if the user attempts to divide by zero or set the modulus to something < 2, you can just "fail fast" with exit(-1).
  
-    DUE: September 22, 2014 (by midnight!)
+    DUE: September 21, 2015 (by midnight!)
 */
 
 #ifndef ____Mod__
@@ -11,7 +11,6 @@
 
 #include <iostream>
 #include <cassert>
-#include <stdint.h>
 
 using std::istream;
 using std::ostream;
@@ -32,7 +31,8 @@ public:
     Mod pwr(long e) const;
     long val() const;
     
-    static void set_modulus(long m); 
+    static void set_modulus(long m);
+    
 private:
     long x;
     static long modulus;
@@ -56,5 +56,7 @@ bool operator!=(long t, const Mod& m);
 
 istream& operator>>(istream& is, Mod& m);
 ostream& operator<<(ostream& os, const Mod& m);
+
+//long Mod::modulus = 17;
 
 #endif /* defined(____Mod__) */
