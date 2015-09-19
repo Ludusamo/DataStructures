@@ -12,11 +12,6 @@ int64_t a = 6;
 int64_t b = 23;
 
 
-void resetVariables(Mod& mod1, Mod& mod2) {
-	mod1 = Mod(a);
-	mod2 = Mod(b);
-}
-
 int main() {	
 	FILE *input;
 	input = fopen("res/test.in", "r");	
@@ -25,6 +20,7 @@ int main() {
 		exit(0);
 	}
 
+	int numCorrect = 0;
 	int numTest;
 	int64_t a, b, mod, expectedValue;
 	int op;
@@ -32,8 +28,9 @@ int main() {
 	for (int i = 0; i < numTest; i++) {
 		fscanf(input, "%lld %lld %lld %d %lld", &a, &b, &mod, &op, &expectedValue);
 		TestCase test(a, b, mod, op, expectedValue);
-		test.run();
+		if(test.run()) numCorrect++;
 	}
+	printf("%d out of %d correct\n", numCorrect, numTest);
 	
 	return 0;
 }

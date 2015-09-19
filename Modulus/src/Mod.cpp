@@ -82,11 +82,37 @@ Mod Mod::pwr(int64_t e) const {
 	return p;
 }
 
+int64_t calculateNextS(int64_t prev, int64_t curr, int64_t q) {
+	return prev - q * curr;
+}
+
+int64_t extendedEuclidean(int64_t a, int64_t b) {
+	int64_t sPrev = 1;
+	int64_t sCurr = 0;
+	int64_t tPrev = 0;
+	int64_t rCurr = 1;
+	if (a % b == 0) {
+		printf("Cannot divide by 0\n");
+		exit(0);
+	}
+	while (b % (a % b) != 0) {
+		int64_t bufferS = calculateNextS(sPrev, sCurr, a / b);
+		sPrev = sCurr;
+		sCurr = bufferS;
+
+		int64_t buffer = a;
+		a = b;
+		b = buffer % b;	
+	}
+	int64_t bufferS = calculateNextS(sPrev, sCurr, a / b);
+	sPrev = sCurr;
+	sCurr = bufferS;
+
+	return sCurr;
+}
+
 Mod Mod::inv(int64_t r0) {
-	ExtendedEuclidean extEuc(r0, modulus);
-	extEuc.execute();
-	BezoutIdentity bezoutIdentity = extEuc.getBezoutIdentity();
-	return Mod(bezoutIdentity.x);
+	return Mod(extendedEuclidean(r0, modulus));
 }
 
 int64_t Mod::val() const {

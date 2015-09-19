@@ -62,4 +62,5 @@ int TestCase::run() {
 	printf("Time elapsed: %ld.%06lds\n", (long int)elapsedTime.tv_sec, (long int)elapsedTime.tv_usec);
 	printf("Result: %lld %s %lld\n", result, (result == expectedValue) ? "matches" : "does not match", expectedValue);
 	printf("---------------------------------------------------------\n\n");
+	return (result == expectedValue);
 }
