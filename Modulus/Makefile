@@ -1,4 +1,4 @@
-OBJS = src/TestCase.cpp src/ExtendedEuclidean.cpp src/Mod.cpp main.cpp
+OBJS = src/TestCase.cpp src/Mod.cpp main.cpp
 
 # Compiler
 CC = g++
