@@ -1,22 +1,22 @@
 #include "Link.h"
 
-std::vector<int> loopTail(Link<int>* head) {
+std::vector<int32_t> loopTail(Link<int32_t>* head) {
 
 }
 
-std::vector<int> josephus(int n, int k) {
+std::vector<int32_t> josephus(int32_t n, int32_t k) {
 	// Creates circularly linked list in reverse order
-	Link<int> *beginning = new Link<int>(n);
-	Link<int> *nextLink = beginning;
-	for (int i = n - 1; i > 0; i--) {
-		Link<int> *link = new Link<int>(i, nextLink);
+	Link<int32_t> *beginning = new Link<int32_t>(n);
+	Link<int32_t> *nextLink = beginning;
+	for (int32_t i = n - 1; i > 0; i--) {
+		Link<int32_t> *link = new Link<int32_t>(i, nextLink);
 		nextLink = link;
 	}
 	beginning->next = nextLink;
 
-	Link<int> *currentLink = beginning;
-	std::vector<int> deathOrder;
-	int counter = 0;
+	Link<int32_t> *currentLink = beginning;
+	std::vector<int32_t> deathOrder;
+	int32_t counter = 0;
 	while (currentLink->next != currentLink) {
 		counter++;
 		if (counter == k) {
@@ -30,6 +30,5 @@ std::vector<int> josephus(int n, int k) {
 	}
 	deathOrder.push_back(currentLink->info);
 
-	delete beginning;
 	return deathOrder;
 }

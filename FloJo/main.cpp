@@ -1,10 +1,13 @@
 #include <cstdio>
+#include <climits>
+
 #include "Link.h"
 
 int main() {
-	std::vector<int> deathOrder = josephus(5, 3);
+	std::vector<int32_t> deathOrder = josephus(1000000, 3);
 	
-	for (int i = 0; i < deathOrder.size(); i++) {
+	printf("Death Order:\n");
+	for (int32_t i = 0; i < deathOrder.size(); i++) {
 		printf("%i\n", deathOrder[i]);
 	}
 }
