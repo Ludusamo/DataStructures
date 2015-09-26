@@ -3,7 +3,6 @@
 Link<int32_t> *hasLoop(Link<int32_t>* head) {
 	Link<int32_t> *turtle = head;
 	Link<int32_t> *hare = head;
-
 	do {
 		if (hare->next == 0 || hare->next->next == 0 || turtle->next == 0) 
 			return 0;
@@ -50,6 +49,31 @@ std::vector<int32_t> loopTail(Link<int32_t>* head) {
 	return loopTailInfo;
 }
 
-std::vector<int> josephus(int n, int k) {
+std::vector<int32_t> josephus(int32_t n, int32_t k) {
+	// Creates circularly linked list in reverse order
+	Link<int32_t> *beginning = new Link<int32_t>(n);
+	Link<int32_t> *nextLink = beginning;
+	for (int32_t i = n - 1; i > 0; i--) {
+		Link<int32_t> *link = new Link<int32_t>(i, nextLink);
+		nextLink = link;
+	}
+	beginning->next = nextLink;
 
+	Link<int32_t> *currentLink = beginning;
+	std::vector<int32_t> deathOrder;
+	int32_t counter = 0;
+	while (currentLink->next != currentLink) {
+		counter++;
+		if (counter == k) {
+			nextLink = currentLink->next;
+			currentLink->next = nextLink->next;	
+			deathOrder.push_back(nextLink->info);
+			counter = 0;
+			nextLink->next = 0;
+			delete nextLink;
+		} else currentLink = currentLink->next;
+	}
+	deathOrder.push_back(currentLink->info);
+
+	return deathOrder;
 }
