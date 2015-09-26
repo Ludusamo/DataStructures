@@ -1,5 +1,5 @@
-#ifndef VECTOR_H
-#define VECTOR_H
+#ifndef LINK_H
+#define LINK_H
 
 #include <vector>
 #include <cstdio>
@@ -24,7 +24,8 @@ struct Link {
 
 Link<int32_t> *hasLoop(Link<int32_t>* head); // Returns a link in the loop
 int32_t determineLoopSize(Link<int32_t>* linkInLoop);
+int32_t determineTailSize(Link<int32_t>* head, int32_t loopSize);
 std::vector<int32_t> loopTail(Link<int32_t>* head);
 std::vector<int32_t> josephus(int32_t n, int32_t k);
 
-#endif // VECTOR_H
+#endif // LINK_H

@@ -9,7 +9,6 @@ Link<int32_t> *hasLoop(Link<int32_t>* head) {
 			return 0;
 		turtle = turtle->next;
 		hare = hare->next->next;
-		printf("(Turtle, Hare):(%i,%i)\n", turtle->info, hare->info);
 	} while (turtle->info != hare->info);
 	return hare;
 }
@@ -24,12 +23,31 @@ int32_t determineLoopSize(Link<int32_t>* linkInLoop) {
 	return count;
 }
 
+int32_t determineTailSize(Link<int32_t>* head, int32_t loopSize) {
+	Link<int32_t> *link1 = head;
+	Link<int32_t> *link2 = head;
+	for (int32_t i = 0; i < loopSize; i++)
+		link2 = link2->next;
+
+	int32_t counter = 0;
+	while (link1 != link2) {
+		counter++;
+		link1 = link1->next;
+		link2 = link2->next;
+	}
+	return counter;
+}
+
 std::vector<int32_t> loopTail(Link<int32_t>* head) {	
 	Link<int32_t> *loopLink = hasLoop(head);
+	std::vector<int32_t> loopTailInfo(2);
 	if (loopLink != 0) {
 		int32_t loopSize = determineLoopSize(loopLink);
-		printf("Loop Size: %i\n", loopSize);
+		loopTailInfo[0] = loopSize;
+		int32_t tailSize = determineTailSize(head, loopSize);
+		loopTailInfo[1] = tailSize;
 	}
+	return loopTailInfo;
 }
 
 std::vector<int> josephus(int n, int k) {
