@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <cstdio>
+#include <stdint.h>
 
 template<class T>
 struct Link {
@@ -21,7 +22,9 @@ struct Link {
 	Link *next;
 };
 
-std::vector<int> loopTail(Link<int>* head);
-std::vector<int> josephus(int n, int k);
+Link<int32_t> *hasLoop(Link<int32_t>* head); // Returns a link in the loop
+int32_t determineLoopSize(Link<int32_t>* linkInLoop);
+std::vector<int32_t> loopTail(Link<int32_t>* head);
+std::vector<int32_t> josephus(int32_t n, int32_t k);
 
 #endif // VECTOR_H
