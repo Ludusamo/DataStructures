@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstdio>
 #include <stdint.h>
+#include <stdlib.h>
 
 template<class T>
 struct Link {
@@ -64,12 +65,21 @@ int32_t determineTailSize(Link<T>* head, int32_t loopSize) {
 
 template<class T>
 std::vector<int32_t> loopTail(Link<T>* head) {
-	Link<T> *loopLink = hasLoop(head);
 	std::vector<int32_t> loopTailInfo(2);
+	if (head == 0) return loopTailInfo;
+	Link<T> *loopLink = hasLoop(head);
 	if (loopLink != 0) {
 		int32_t loopSize = determineLoopSize(loopLink);
 		loopTailInfo[0] = loopSize;
 		int32_t tailSize = determineTailSize(head, loopSize);
+		loopTailInfo[1] = tailSize;
+	} else {
+		int32_t tailSize = 0;
+		Link<T> *link = head;
+		while (link != 0) {
+			tailSize++;
+			link = link->next;	
+		}
 		loopTailInfo[1] = tailSize;
 	}
 	return loopTailInfo;

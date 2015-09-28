@@ -2,6 +2,10 @@
 
 std::vector<int32_t> josephus(int32_t n, int32_t k) {
 	if (n == 0) return std::vector<int32_t>();
+	if (k == 0) {
+		printf("Cannot set k < 1\n");
+		exit(-1);
+	}
 	// Creates circularly linked list in reverse order
 	Link<int32_t> *beginning = new Link<int32_t>(n);
 	Link<int32_t> *nextLink = beginning;
