@@ -3,8 +3,9 @@
 int main() {
 	int count = 0;
 	srand(time(NULL));	
-	for (int i = 0; i < 100000; i++) {
-		if(flip()) count++;
+	for (int i = 0; i < 10; i++) {
+		if(flip(1,3)) count++;
 	}
-	printf("%d out of 100000", count);
+	printf("%d out of 10\n", count);
+
 }
