@@ -10,4 +10,8 @@ bool flip();
 
 bool flip(uint64_t a, uint64_t b);
 
+bool bad_flip();
+
+bool good_flip();
+
 #endif // PROBABILITY_H
