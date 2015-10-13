@@ -15,7 +15,15 @@ bool flip(uint64_t a, uint64_t b) {
 }
 
 bool bad_flip() {
-	uint64_t denominator = rand() % 1000000;
-	uint64_t numerator = rand() % denominator;
-	return ((double) (rand() % 1000000) / (double)1000000) > (((double) numerator) / ((double) denominator));
+	return ((double) (rand() % 10000000) / (double)10000000) < (double) 10 / (double) 100000;
+}
+
+bool good_flip() {
+	int a, b;
+	do {
+		a = bad_flip();
+		b = bad_flip();
+	} while (a == b);
+	printf("%d %d\n", a, b);
+	return a;
 }
