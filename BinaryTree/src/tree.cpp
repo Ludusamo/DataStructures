@@ -1,4 +1,5 @@
 #include "tree.h"
+#include "cstdio"
 
 Tree::Entry::Entry(const string& key, double val) {
 	this->key = key;
@@ -25,8 +26,8 @@ void Tree::Node::kill(Node *p) {
 	if (!p) return;
 	Tree::Node::kill(p->l);
 	Tree::Node::kill(p->r);
-	delete p;
-}
+	delete p; 
+} 
 
 Tree::It::It(Node *p, const stack<Node*>& s) {
 	this->p = p;
@@ -43,16 +44,78 @@ Tree::It::~It() {
 	p = NULL;
 }
 
+double& Tree::It::operator*() const {
+	printf("Dereferencing Node: %s\n", p->e.key.c_str());
+	return p->e.val;
+}
+
 Tree::It Tree::It::operator++(int) {
-	p = s.top();	s.pop();
+	if (p->r) {
+		s.push(p);
+		p = p->r;
+		while (p->l) {
+			s.push(p);
+			p = p->l;
+		}
+	} else if (!s.empty()) {
+		while (s.top()->r == p) {
+			p = s.top();
+			s.pop();
+		}
+		p = s.top();
+		s.pop();
+	} else {
+		return It(0, stack<Node*>());
+	}
+	return *this;
 }
 
 Tree::It& Tree::It::operator++() {
+	(*this)++;
+	return *this;
+}
 
+Tree::It Tree::It::operator--(int) {
+	if (p->l) {
+		s.push(p);
+		p = p->l;
+		while (p->r) {
+			s.push(p);
+			p = p->r;
+		}
+	} else if (!s.empty()) {
+		Node *current = p;
+		Node *parent = s.top();
+		s.pop();
+		while (parent->l != current) {
+			current = parent;
+			parent = s.top();
+			s.pop();
+		}
+		p = parent;
+	} else if (p == 0) {
+	} else {
+		p = 0;
+	}
+	return It(*this);
+}
+
+Tree::It& Tree::It::operator--() {
+	(*this)--;
+	return *this;
+}
+
+bool Tree::It::operator!=(const It& it) const {
+	return p->e.key != it.p->e.key;
+}
+
+bool Tree::It::operator==(const It& it) const {
+	return !(*this != it);
 }
 
 Tree::Tree() {
-	root = new Node();
+	root = new Node(Entry("Brendan", 2));
+	root->l = new Node(Entry("AJ", 3));
 }
 
 Tree::~Tree() {
@@ -68,18 +131,47 @@ bool Tree::empty() const {
 }
 
 bool Tree::set(const string& key, double val) {
-	Node *currentNode;
-	vector<Node*> unvisitedNodes = vector<Node*>();
-	unvisitedNodes.push_back(root);
-	while (unvisitedNodes.size() > 0) {
-		currentNode = unvisitedNodes[unvisitedNodes.size() - 1];
-		if (currentNode->e.key == key) {
-			currentNode->e.val = val;
-			return true;
-		}
-		unvisitedNodes.pop_back();
-		if (currentNode->l) unvisitedNodes.push_back(currentNode->l);
-		if (currentNode->r) unvisitedNodes.push_back(currentNode->r);
+	It it = lo();
+	while (it != hi() && it.p->e.key < key) {
+		it++;
 	}
+	if (it.p->e.key == key) {
+		it.p->e.val = val;
+		return true;
+	} else if (it == hi()) {
+		Node *newNode = new Node(Entry(key, val));	
+		it.p->r = newNode;
+		return true;
+	}
+
+	Node *newNode = new Node(Entry(key, val), it.p->l, it.p);
+	it.p->l = 0;
+	Node *parent = it.s.top();
+	if (parent->l == it.p) parent->l = newNode;
+	else if (parent->r == it.p) parent->r = newNode;
 	return false;
+}
+
+Tree::It Tree::lo() const {
+	Node *buffer = root;
+	stack<Node*> s = stack<Node*>();
+	while (buffer->l) {
+		s.push(buffer);
+		buffer = buffer->l;
+	}
+	return It(buffer, s);
+}
+
+Tree::It Tree::hi() const {
+	Node *buffer = root;
+	stack<Node*> s = stack<Node*>();
+	while (buffer->r) {
+		s.push(buffer);
+		buffer = buffer->r;
+	}
+	return It(buffer, s);
+}
+
+Tree::It Tree::none() const {
+	return It(0, stack<Node*>());
 }
