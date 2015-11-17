@@ -84,20 +84,16 @@ Tree::It Tree::It::operator--(int) {
 			p = p->r;
 		}
 	} else if (!s.empty()) {
-		Node *current = p;
-		Node *parent = s.top();
-		s.pop();
-		while (parent->l != current) {
-			current = parent;
-			parent = s.top();
+		while (s.top()->l == p) {
+			p = s.top();
 			s.pop();
 		}
-		p = parent;
-	} else if (p == 0) {
+		p = s.top();
+		s.pop();
 	} else {
-		p = 0;
+		return It(0, stack<Node*>());
 	}
-	return It(*this);
+	return *this;
 }
 
 Tree::It& Tree::It::operator--() {
@@ -115,7 +111,8 @@ bool Tree::It::operator==(const It& it) const {
 
 Tree::Tree() {
 	root = new Node(Entry("Brendan", 2));
-	root->l = new Node(Entry("AJ", 3));
+	root->l = new Node(Entry("BA", 3));
+	root->l->l = new Node(Entry("AJ", 3));
 }
 
 Tree::~Tree() {
@@ -128,6 +125,15 @@ size_t Tree::size() const {
 
 bool Tree::empty() const {
 	return root;
+}
+
+Tree::It Tree::get(const string& key) const {
+	It it = hi();
+	while (it.p && it.p->e.key != key) {		
+		*it;	
+		it--;	
+	}
+	return it;
 }
 
 bool Tree::set(const string& key, double val) {
