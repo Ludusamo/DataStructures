@@ -101,6 +101,14 @@ Tree::It& Tree::It::operator--() {
 	return *this;
 }
 
+Tree::It Tree::It::operator+(long j) const {
+	It it = *this;
+	for (long i = 0; i < j; i++) {
+		it++;
+	}
+	return it;
+}
+
 bool Tree::It::operator!=(const It& it) const {
 	return p->e.key != it.p->e.key;
 }
@@ -111,7 +119,7 @@ bool Tree::It::operator==(const It& it) const {
 
 Tree::Tree() {
 	root = new Node(Entry("Brendan", 2));
-	root->l = new Node(Entry("BA", 3));
+	root->l = new Node(Entry("BA", 1));
 	root->l->l = new Node(Entry("AJ", 3));
 }
 
@@ -124,7 +132,7 @@ size_t Tree::size() const {
 }
 
 bool Tree::empty() const {
-	return root;
+	return !root;
 }
 
 Tree::It Tree::get(const string& key) const {
@@ -150,7 +158,7 @@ bool Tree::set(const string& key, double val) {
 		return true;
 	}
 
-	Node *newNode = new Node(Entry(key, val), it.p->l, it.p);
+	Node *newNode = new Node(Entry(key, val), it.p->l, it.p, it.p->n + it.p->n + 1);
 	it.p->l = 0;
 	Node *parent = it.s.top();
 	if (parent->l == it.p) parent->l = newNode;
