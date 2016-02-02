@@ -74,7 +74,7 @@ void Graph::find_strong_components() {
 VVI Graph::find_component_arcs() {
 	VVI component_arcs;
 	for (int i = 0; i < str_comp.size(); i++) {
-		component_arcs.push_back(std::vector<int>());
+		component_arcs.push_back(std::vector<int>(str_comp.size()));
 	}
 
 	for (int s = 0; s < str_comp.size(); s++) {
@@ -82,8 +82,9 @@ VVI Graph::find_component_arcs() {
 			std::vector<int>::iterator i;		
 			for (i = edges[str_comp[s][j]].begin(); i < edges[str_comp[s][j]].end(); ++i) {
 				if (component_members[*i] != component_members[str_comp[s][j]]) {
-					printf("%i %i\n", s, component_members[*i]);
-					component_arcs[s].push_back(component_members[*i]);
+					if (component_arcs[s][component_members[*i]] == 0) {
+						component_arcs[s][component_members[*i]] = 1;
+					}
 				}
 			}
 		}
@@ -131,12 +132,12 @@ Graph Graph::get_transpose() {
 int main() {
 	int n, m;
 	FILE *in = fopen("scmpts.in", "r");
-	fscanf(in, "%i %i", &n, &m);
+	fscanf(in, "%d %d", &n, &m);
 
 	Graph g(n);	
 	for (int i = 0; i < m; i++) {
 		int f, t;
-		fscanf(in, "%i %i", &f, &t);
+		fscanf(in, "%d %d", &f, &t);
 		g.add_edge(f, t);
 	}
 	fclose(in);
@@ -147,16 +148,29 @@ int main() {
 
 	VVI component_arcs = g.find_component_arcs();
 
+	FILE *out = fopen("scmpts.out", "w");
+	fprintf(out, "%d\n", str_comp.size());
+	for (int i = 0; i < str_comp.size(); i++) {
+		fprintf(out, "%d", str_comp[i].size());
+		if (i != str_comp.size() - 1) fprintf(out, " ");
+	}
+	fprintf(out, "\n");
 	for (int i = 0; i < str_comp.size(); i++) {
 		for (int j = 0; j < str_comp[i].size(); j++) {
+			fprintf(out, "%d ", str_comp[i][j]);
 			printf("%d ", str_comp[i][j]);
 		}
+		fprintf(out, "\n");
 		printf("\n");
 	}
 
+	fprintf(out, "%d\n", component_arcs.size() - 1);
 	for (int i = 0; i < component_arcs.size(); i++) {
 		for (int j = 0; j < component_arcs[i].size(); j++) {
-			printf("%i to %i\n", i, component_arcs[i][j]);	
+			if (component_arcs[i][j] == 1) {
+				printf("%d to %d\n", i, j);	
+				fprintf(out, "%d %d\n", i, j);
+			}
 		}
 	}
 
